@@ -616,7 +616,7 @@ suspend fun getDailyNumerologyResponse(date: String, time: String, city: String)
                 put("messages", JSONArray().put(JSONObject().apply { put("role", "user"); put("content", prompt) }))
                 put("max_tokens", 400) 
             }
-            val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "Api_key").header("HTTP-Referer", "https://github.com/glazev/magicball").header("X-Title", "Magic Ball AI").post(json.toString().toRequestBody("application/json".toMediaType())).build()
+            val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "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").header("HTTP-Referer", "https://github.com/glazev/magicball").header("X-Title", "Magic Ball AI").post(json.toString().toRequestBody("application/json".toMediaType())).build()
             aiClient.newCall(request).execute().use { response ->
                 if (response.isSuccessful) {
                     return@withContext JSONObject(response.body?.string() ?: "").getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content").trim()
@@ -733,7 +733,7 @@ suspend fun getChatAiResponse(history: List<ChatMessage>): String = withContext(
     }
     try {
         val json = JSONObject().apply { put("model", "google/gemini-2.0-flash-001"); put("messages", messages); put("max_tokens", 250) }
-        val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "Api_key").header("HTTP-Referer", "https://github.com/glazev/magicball").header("X-Title", "Magic Ball AI").post(json.toString().toRequestBody("application/json".toMediaType())).build()
+        val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "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").header("HTTP-Referer", "https://github.com/glazev/magicball").header("X-Title", "Magic Ball AI").post(json.toString().toRequestBody("application/json".toMediaType())).build()
         aiClient.newCall(request).execute().use { response ->
             if (response.isSuccessful) return@withContext JSONObject(response.body?.string() ?: "").getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content").trim()
         }
@@ -752,7 +752,7 @@ suspend fun getAiResponse(mode: AppMode, q: String): String? = withContext(Dispa
     }
     try {
         val json = JSONObject().apply { put("model", "google/gemini-2.0-flash-001"); put("messages", JSONArray().put(JSONObject().apply { put("role", "user"); put("content", prompt) })); put("max_tokens", 50) }
-        val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "Api_key").post(json.toString().toRequestBody("application/json".toMediaType())).build()
+        val request = Request.Builder().url("https://openrouter.ai/api/v1/chat/completions").header("Authorization", "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").post(json.toString().toRequestBody("application/json".toMediaType())).build()
         aiClient.newCall(request).execute().use { response ->
             if (response.isSuccessful) {
                 val raw = JSONObject(response.body?.string() ?: "").getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content").trim().uppercase()
