@@ -4,9 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-// Константы версии для автоматизации
 val versionMajor = 1
-val versionMinor = 7
+val versionMinor = 8
 val versionPatch = 0
 
 android {
@@ -17,8 +16,6 @@ android {
         applicationId = "com.glazev.magicball"
         minSdk = 29
         targetSdk = 35
-        
-        // Автоматический расчет versionCode (например, 10700)
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName = "$versionMajor.$versionMinor.$versionPatch"
 
@@ -27,7 +24,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true // Сжимает код
+            isShrinkResources = true // Удаляет лишние ресурсы
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -60,7 +58,6 @@ dependencies {
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
     implementation(libs.androidx.compose.material.icons.extended)
     
-    // Networking
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp)
